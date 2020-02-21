@@ -1,1 +1,3 @@
 /target/
+/webpack.generated.js
+/node_modules/
