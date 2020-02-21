@@ -1,0 +1,1 @@
+$wnd.com_vaadin_demo_dashboard_DashboardWidgetSet.runAsyncCallback2('Djb(1690,1,gpe);_.vc=function oAc(){Djc((!wjc&&(wjc=new Ijc),wjc),this.a.d)};kge(Zh)(2);\n//# sourceURL=com.vaadin.demo.dashboard.DashboardWidgetSet-2.js\n')
