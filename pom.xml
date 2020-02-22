@@ -8,7 +8,7 @@
 
     <properties>
         <productionMode>false</productionMode>
-        <vaadin7.version>7.7.15</vaadin7.version>
+        <vaadin7.version>7.7.17</vaadin7.version>
         <vaadin.version>14.1.17</vaadin.version>
         <flow.version>2.1.5</flow.version>
         <vaadin.plugin.version>${vaadin7.version}</vaadin.plugin.version>
@@ -64,6 +64,16 @@
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-server</artifactId>
             <version>${vaadin7.version}</version>
+    		<exclusions>
+        		<exclusion>
+            		<groupId>org.jsoup</groupId>
+            		<artifactId>jsoup</artifactId>
+        		</exclusion>
+        		<exclusion>
+            		<groupId>com.google.gwt</groupId>
+            		<artifactId>gwt-elemental</artifactId>
+        		</exclusion>
+    		</exclusions>            
         </dependency>
         <dependency>
             <groupId>com.vaadin</groupId>
@@ -79,7 +89,7 @@
         <dependency>
             <groupId>com.vaadin.addon</groupId>
             <artifactId>vaadin-charts</artifactId>
-            <version>2.0.0</version>
+            <version>3.2.0</version>
             <exclusions>
                 <exclusion>
                     <groupId>commons-io</groupId>
@@ -90,7 +100,13 @@
         <dependency>
             <groupId>org.peimari</groupId>
             <artifactId>maddon</artifactId>
-            <version>1.15</version>
+            <version>1.21</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-io</groupId>
+                    <artifactId>commons-io</artifactId>
+                </exclusion>
+            </exclusions>            
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -101,7 +117,7 @@
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <version>3.0.1</version>
+            <version>4.0.1</version>
             <scope>provided</scope>
         </dependency>
 
@@ -121,6 +137,11 @@
             <groupId>com.netflix.spectator</groupId>
             <artifactId>spectator-ext-gc</artifactId>
             <version>${spectator.version}</version>
+        </dependency>
+        <dependency>
+        	<groupId>com.google.code.gson</groupId>
+        	<artifactId>gson</artifactId>
+        	<version>2.8.5</version>
         </dependency>
     </dependencies>
 
