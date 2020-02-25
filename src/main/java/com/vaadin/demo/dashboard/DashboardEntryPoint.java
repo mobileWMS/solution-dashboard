@@ -9,11 +9,15 @@ import com.vaadin.demo.dashboard.event.DashboardEvent.UserLoginRequestedEvent;
 import com.vaadin.demo.dashboard.event.DashboardEventBus;
 import com.vaadin.demo.dashboard.view.LoginView;
 import com.vaadin.demo.dashboard.view.MainView;
+import com.vaadin.flow.component.AttachEvent;
+import com.vaadin.flow.component.DetachEvent;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.page.Viewport;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.InitialPageSettings;
 import com.vaadin.flow.server.PageConfigurator;
+import com.vaadin.flow.shared.Registration;
 import com.vaadin.mpr.LegacyWrapper;
 import com.vaadin.mpr.core.LegacyUI;
 import com.vaadin.mpr.core.MprTheme;
@@ -30,6 +34,7 @@ import com.vaadin.ui.themes.ValoTheme;
 
 import java.util.Locale;
 
+@Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
 @MprTheme("dashboard")
 @MprWidgetset("com.vaadin.demo.dashboard.DashboardWidgetSet")
 @PageTitle("QuickTickets Dashboard")
@@ -50,17 +55,26 @@ public final class DashboardEntryPoint extends Div implements PageConfigurator {
         content.addStyleName(ValoTheme.UI_WITH_MENU);
 
         updateContent(false);
+    }
+    
+    private Registration listener;
 
-        // Some views need to be aware of browser resize events so a
-        // BrowserResizeEvent gets fired to the event bus on every occasion.
-        Page.getCurrent().addBrowserWindowResizeListener(
-                new BrowserWindowResizeListener() {
-                    @Override
-                    public void browserWindowResized(
-                            final BrowserWindowResizeEvent event) {
-                        DashboardEventBus.post(new BrowserResizeEvent());
-                    }
-                });
+    @Override
+    protected void onAttach(AttachEvent attachEvent) {
+    	super.onAttach(attachEvent);
+            // uncomment the line below if you need workaround also when not resizing
+            // ui.getPage().executeJavaScript("vaadin.forceLayout()");
+    	getUI().ifPresent(ui -> listener = ui.getPage().addBrowserWindowResizeListener(event -> {
+    		ui.getPage().executeJavaScript("vaadin.forceLayout()");
+    	}));
+    }
+
+    @Override
+    protected void onDetach(DetachEvent detachEvent) {
+    	// It is needed to remove the BrowserWindowResizeListener during detach
+    	// in order not to bloat browser resources
+    	listener.remove();
+    	super.onDetach(detachEvent);
     }
 
     /**
@@ -109,8 +123,8 @@ public final class DashboardEntryPoint extends Div implements PageConfigurator {
 
     @Override
     public void configurePage(InitialPageSettings initialPageSettings) {
-        initialPageSettings.addMetaTag("viewport",
-                "width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no");
+//        initialPageSettings.addMetaTag("viewport",
+//                "width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no");
         initialPageSettings.addMetaTag("apple-mobile-web-app-capable", "yes");
         initialPageSettings.addMetaTag("apple-mobile-web-app-status-bar-style",
                 "black-translucent");
