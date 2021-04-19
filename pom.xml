@@ -8,7 +8,7 @@
 
     <properties>
         <productionMode>false</productionMode>
-        <vaadin7.version>7.7.17</vaadin7.version>
+        <vaadin7.version>8.12.4</vaadin7.version>
         <vaadin.version>14.1.17</vaadin.version>
         <flow.version>2.1.5</flow.version>
         <vaadin.plugin.version>${vaadin7.version}</vaadin.plugin.version>
